@@ -21,5 +21,4 @@ print(meanFile)
 }
 }
 rspta <- complete("specdata", "sulfate", 1:10)
-quit
-quit()
+
