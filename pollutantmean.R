@@ -20,5 +20,5 @@ pollutantmean <- function(directory, pollutant, id) {
 			print(meanFile)
 		}
 }
-a <- pollutantmean("specdata", "sulfate", 1:10)
+#a <- pollutantmean("specdata", "sulfate", 1:10)
 
