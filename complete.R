@@ -22,4 +22,4 @@ complete  <- function(directory, id) {
 		rspta <- data.frame(ids = vectorIdFile, nobs = vectorAllLines) 
 		print(rspta)
 }
-a <- complete ("specdata", 1:10)
+#a <- complete ("specdata", 1:10)
