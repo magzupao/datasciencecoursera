@@ -18,4 +18,4 @@ corr <- function(directory, id) {
 			print(valueCorrelation)
 		}
 }
-a <- corr("specdata", 1:10)
+#a <- corr("specdata", 1:10)
