@@ -1,24 +1,37 @@
-pollutantmean <- function(directory, pollutant, id) {
-        ## 'directory' is a character vector of length 1 indicating
-        ## the location of the CSV files
-        ## 'pollutant' is a character vector of length 1 indicating
-        ## the name of the pollutant for which we will calculate the
-        ## mean; either "sulfate" or "nitrate".
-        ## 'id' is an integer vector indicating the monitor ID numbers
-        ## to be used
-        ## Return the mean of the pollutant across all monitors list
-        ## in the 'id' vector (ignoring NA values)
-		filenames <- list.files(directory, pattern="*.csv")
-		for(i in seq_along(id)) {
-			nameFile <- paste(directory, filenames[i], sep = "/")
-			contentFile <- read.csv(nameFile,head=TRUE,sep=",")
-			if(pollutant == "sulfate"){
-				meanFile <- mean(contentFile$sulfate[!is.na(contentFile$sulfate)])
-			}else{
-				meanFile <- mean(contentFile$nitrate[!is.na(contentFile$nitrate)])
-			}
-			print(meanFile)
-		}
-}
-#a <- pollutantmean("specdata", "sulfate", 1:10)
+#####################################################################
+# programming assignment 1: Course Project
+# r-programming
+# Marco Guado Zavaleta, mguado@gmail.com
+# Octubre 2016
+#####################################################################
 
+pollutantmean <- function(path.files, pollutant, id) {
+
+  #We store all file names
+  list.filenames <- list.files(path.files, pattern="*.csv")
+  
+  #numercia list that stores all values, useful to determine the median
+  list.values <- numeric()
+  
+  for(i in c(id) ) {
+    
+    #file name processing
+    filename <- paste(path.files, list.filenames[i], sep = "/")
+    
+    #load the file contents
+    df.File <- read.csv(filename, head=TRUE, sep=",")
+    
+    #filter by sulfate or nitrate
+    if(pollutant == "sulfate"){
+      valores <- df.File$sulfate[!is.na(df.File$sulfate)]
+    }
+    else{
+      valores <- df.File$nitrate[!is.na(df.File$nitrate)]
+    }
+    
+    #It contains all values for each interaction
+    list.values <- append(list.values, valores)
+  }
+  return(mean(list.values))
+  
+}
