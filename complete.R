@@ -1,3 +1,9 @@
+#####################################################################
+# programming assignment 1: Course Project
+# r-programming
+# Marco Guado Zavaleta, mguado@gmail.com
+# Octubre 2016
+#####################################################################
 complete  <- function(path.files, id) {
 
   #We store all file names
