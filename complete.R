@@ -1,25 +1,32 @@
-complete  <- function(directory, id) {
-    ## 'directory' is a character vector of length 1 indicating
-    ## the location of the CSV files
-    ## 'id' is an integer vector indicating the monitor ID numbers
-    ## to be used
-    ## Return a data frame of the form:
-    ## id nobs
-    ## 1  117
-    ## 2  1041
-    ## ...
-    ## where 'id' is the monitor ID number and 'nobs' is the
-    ## number of complete cases
-	filenames <- list.files(directory, pattern="*.csv")
-		vectorIdFile <- numeric(0)
-		vectorAllLines <- numeric(0)
-		for(i in seq_along(id)) {
-			nameFile <- paste(directory, filenames[i], sep = "/")
-			numberAllLines <- length(readLines(nameFile)) 
-			vectorIdFile <- append(vectorIdFile, i, after=length(vectorIdFile))
-			vectorAllLines <- append(vectorAllLines, numberAllLines, after=length(vectorAllLines))			
-		}
-		rspta <- data.frame(ids = vectorIdFile, nobs = vectorAllLines) 
-		print(rspta)
+complete  <- function(path.files, id) {
+
+  #We store all file names
+  list.filenames <- list.files(path.files, pattern="*.csv")
+  
+  id.file <- integer()
+  num.filas <- integer()
+  
+  for(i in c(id) ) {
+    
+    #file name processing
+    filename <- paste(path.files, list.filenames[i], sep = "/")
+    
+    #load the file contents
+    df.File <- read.csv(filename, head=TRUE, sep=",")
+    
+    filas <- length(df.File$sulfate[!is.na(df.File$sulfate)])
+    
+    id.file <- append(id.file, i)
+    num.filas <- append(num.filas, filas)
+    
+  }
+  
+  rspta <- data.frame(id.file , num.filas)
+  
+  #rspta.names <- c("id", "nobs")
+  colnames(rspta) <- c("id", "nobs")
+  
+  rspta
+  
 }
 #a <- complete ("specdata", 1:10)
