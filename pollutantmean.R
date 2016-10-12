@@ -5,13 +5,17 @@
 # Octubre 2016
 #####################################################################
 
-pollutantmean <- function(path.files, pollutant, id) {
+pollutantmean <- function(path.files, pollutant, id = 0) {
 
   #We store all file names
   list.filenames <- list.files(path.files, pattern="*.csv")
   
   #numercia list that stores all values, useful to determine the median
   list.values <- numeric()
+  
+  if(id == 0){
+    id = 332
+  }
   
   for(i in c(id) ) {
     
