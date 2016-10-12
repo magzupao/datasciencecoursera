@@ -1,21 +1,24 @@
-corr <- function(directory, id) {
-		## 'directory' is a character vector of length 1 indicating
-        ## the location of the CSV files
+corr <- function(path.files, id) {
 
-        ## 'threshold' is a numeric vector of length 1 indicating the
-        ## number of completely observed observations (on all
-        ## variables) required to compute the correlation between
-        ## nitrate and sulfate; the default is 0
+  #We store all file names
+  list.filenames <- list.files(path.files, pattern="*.csv")
 
-        ## Return a numeric vector of correlations
-		filenames <- list.files(directory, pattern="*.csv")
-		for(i in seq_along(id)) {
-			nameFile <- paste(directory, filenames[i], sep = "/")
-			contentFile <- read.csv(nameFile,head=TRUE,sep=",")
-			x <- mean(contentFile$sulfate[!is.na(contentFile$sulfate)])
-			y <- mean(contentFile$nitrate[!is.na(contentFile$nitrate)])
-			valueCorrelation <- cor(y,x)			
-			print(valueCorrelation)
-		}
+  list.cor <- c()
+  
+  for(i in 1:length(list.filenames)){
+
+    #file name processing
+    filename <- paste(path.files, list.filenames[i], sep = "/")
+    
+    #load the file contents
+    df.File <- read.csv(filename, head=TRUE, sep=",")  
+    df.File <- df.File %>% drop_na()
+
+    if ( nrow(df.File) > id ) {
+      list.cor <- c(list.cor, cor(df.File$sulfate, df.File$nitrate))
+    }
+  }
+  
+  return(list.cor)
 }
 #a <- corr("specdata", 1:10)
