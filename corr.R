@@ -5,12 +5,16 @@
 # Octubre 2016
 #####################################################################
 
-corr <- function(path.files, id) {
+corr <- function(path.files, id = 0) {
 
   #We store all file names
   list.filenames <- list.files(path.files, pattern="*.csv")
 
   list.cor <- c()
+  
+  if(id == 0){
+    id = 332
+  }
   
   for(i in 1:length(list.filenames)){
 
